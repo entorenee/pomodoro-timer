@@ -5,18 +5,21 @@ import '../style/Timer.css';
 class Timer extends React.Component {
   constructor(props) {
     super(props);
+    this.countdownTimer = this.countdownTimer.bind(this);
+
     this.state = {
-      sessionCountdown: props.sessionTime,
-      breakCountdown: props.breakTime
+      // countdown timers are stored in state in ms as they are directly manipulated by the timer method.
+      sessionCountdown: props.sessionTime * 60000,
+      breakCountdown: props.breakTime * 60000
     }
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.sessionCountdown !== nextProps.sessionTime) {
-      this.setState({sessionCountdown: nextProps.sessionTime})
+      this.setState({sessionCountdown: nextProps.sessionTime * 60000})
     }
     if (this.props.breakCountdown !== nextProps.breakTime) {
-      this.setState({breakCountdown: nextProps.breakTime})
+      this.setState({breakCountdown: nextProps.breakTime * 60000})
     }
     if (nextProps.isRunning === true) {
       console.log("Timer starting!");
@@ -24,6 +27,10 @@ class Timer extends React.Component {
     if (nextProps.isRunning === false) {
       console.log("Timer paused.");
     }
+  }
+
+  countdownTimer() {
+
   }
 
   render() {
