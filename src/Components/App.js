@@ -1,6 +1,7 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
 import Counter from './Counter';
+import Timer from './Timer';
 import '../style/App.css';
 
 class App extends React.Component {
@@ -35,6 +36,7 @@ class App extends React.Component {
           <Counter name="sessionTime" adjustTimers={this.adjustTimers} timerTotal={this.state.sessionTime}/>
           <Counter name="breakTime" adjustTimers={this.adjustTimers} timerTotal={this.state.breakTime}/>
         </div>
+        <Timer sessionTime={this.state.sessionTime} breakTime={this.state.breakTime}/>
       </div>
     )
   }
