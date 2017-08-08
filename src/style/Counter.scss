@@ -1,0 +1,23 @@
+#sessionTime-timer-controls {
+  margin-right: 100px;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.timerTotal {
+  font-size: 36px;
+}
+
+.subtract-time, .add-time {
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  font-size: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

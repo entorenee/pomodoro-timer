@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import '../style/Counter.css';
 
 class Counter extends React.Component {
   render() {
@@ -8,11 +9,13 @@ class Counter extends React.Component {
     if (this.props.name === "breakTime") {timerName = "Break Length"};
 
     return (
-      <div id={this.props.name} className="timer-controls">
+      <div id={this.props.name + "-timer-controls"} className="timer-controls">
         <p>{timerName}</p>
-        <span className="subtract-time" onClick={() => this.props.adjustTimers(this.props.name, "-")}>-</span>
-        <span>{this.props.timerTotal}</span>
-        <span className="add-time" onClick={() => this.props.adjustTimers(this.props.name, "+")}>+</span>
+        <div className="controls">
+          <div className="subtract-time" onClick={() => this.props.adjustTimers(this.props.name, "-")}>-</div>
+          <div className="timerTotal">{this.props.timerTotal}</div>
+          <div className="add-time" onClick={() => this.props.adjustTimers(this.props.name, "+")}>+</div>
+        </div>
       </div>
     )
   }
