@@ -3,6 +3,13 @@ import PropTypes from 'prop-types';
 import '../style/Counter.css';
 
 class Counter extends React.Component {
+  shouldComponentUpdate(nextProps) {
+    if (this.props.timerTotal !== nextProps.timerTotal) {
+      return true;
+    }
+    return false;
+  }
+
   render() {
     var timerName;
     if (this.props.name === "sessionTime") {timerName = "Session Length"};
