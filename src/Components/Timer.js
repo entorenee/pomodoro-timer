@@ -12,10 +12,18 @@ class Timer extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({
-      sessionCountdown: nextProps.sessionTime,
-      breakCountdown: nextProps.breakTime
-    });
+    if (this.props.sessionCountdown !== nextProps.sessionTime) {
+      this.setState({sessionCountdown: nextProps.sessionTime})
+    }
+    if (this.props.breakCountdown !== nextProps.breakTime) {
+      this.setState({breakCountdown: nextProps.breakTime})
+    }
+    if (nextProps.isRunning === true) {
+      console.log("Timer starting!");
+    }
+    if (nextProps.isRunning === false) {
+      console.log("Timer paused.");
+    }
   }
 
   render() {
@@ -30,7 +38,8 @@ class Timer extends React.Component {
 
 Timer.propTypes = {
   sessionTime: PropTypes.number.isRequired,
-  breakTime: PropTypes.number.isRequired
+  breakTime: PropTypes.number.isRequired,
+  isRunning: PropTypes.bool.isRequired
 }
 
 export default Timer;

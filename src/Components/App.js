@@ -36,7 +36,11 @@ class App extends React.Component {
           <Counter name="sessionTime" adjustTimers={this.adjustTimers} timerTotal={this.state.sessionTime}/>
           <Counter name="breakTime" adjustTimers={this.adjustTimers} timerTotal={this.state.breakTime}/>
         </div>
-        <Timer sessionTime={this.state.sessionTime} breakTime={this.state.breakTime}/>
+        <Timer
+          sessionTime={this.state.sessionTime}
+          breakTime={this.state.breakTime}
+          isRunning={this.state.isRunning}
+        />
       </div>
     )
   }
