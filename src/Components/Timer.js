@@ -6,6 +6,7 @@ class Timer extends React.Component {
   constructor(props) {
     super(props);
     this.countdownTimer = this.countdownTimer.bind(this);
+    this.pauseTimer = this.pauseTimer.bind(this);
 
     this.state = {
       // countdown timers are stored in state in ms as they are directly manipulated by the timer method.
@@ -23,18 +24,23 @@ class Timer extends React.Component {
     if (this.props.breakCountdown !== nextProps.breakTime) {
       this.setState({breakCountdown: nextProps.breakTime * 60000})
     }
-    if (nextProps.isRunning === true) {
-      console.log("Timer starting!");
-      this.countdownTimer();
+    if (nextProps.isRunning === true && this.state.sessionCountdown > 0) { // Timer runs through session first
+      console.log("Session timer starting!");
+      this.countdownTimer(this.state.sessionCountdown);
+    }
+    if (nextProps.isRunning === true && this.state.sessionCountdown === 0 && this.state.breakCountdown > 0) { // Run break timer if session timer is zero
+      console.log("Break timer starting!");
+      this.countdownTimer(this.state.breakCountdown);
     }
     if (nextProps.isRunning === false) {
+      this.pauseTimer();
       console.log("Timer paused.");
     }
   }
 
-  countdownTimer() {
-    var endTime = Date.now() + this.state.sessionCountdown;
-    setInterval(() => {
+  countdownTimer(timerToRun) {
+    var endTime = Date.now() + timerToRun;
+    var intervalId = setInterval(() => {
       var timeLeft = endTime - Date.now();
       var minutesLeft = Math.floor(timeLeft/60000 % 60);
       var secondsLeft = Math.floor(timeLeft/1000 % 60);
@@ -46,6 +52,11 @@ class Timer extends React.Component {
         seconds: secondsLeft
       });
     }, 1000);
+    this.setState({intervalId: intervalId});
+  }
+
+  pauseTimer() {
+    clearInterval(this.state.intervalId);
   }
 
   render() {
