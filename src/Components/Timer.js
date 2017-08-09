@@ -18,11 +18,11 @@ class Timer extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.sessionCountdown !== nextProps.sessionTime) {
-      this.setState({sessionCountdown: nextProps.sessionTime * 60000})
+    if (this.props.sessionTime !== nextProps.sessionTime) {
+      this.setState({sessionCountdown: nextProps.sessionTime * 60000});
     }
-    if (this.props.breakCountdown !== nextProps.breakTime) {
-      this.setState({breakCountdown: nextProps.breakTime * 60000})
+    if (this.props.breakTime !== nextProps.breakTime) {
+      this.setState({breakCountdown: nextProps.breakTime * 60000});
     }
     if (nextProps.isRunning === true && this.state.sessionCountdown > 0) { // Timer runs through session first
       console.log("Session timer starting!");
@@ -40,19 +40,26 @@ class Timer extends React.Component {
 
   countdownTimer(timerToRun) {
     var endTime = Date.now() + timerToRun;
+    var currTimer = timerToRun === this.state.sessionCountdown ? "Session" : "Break";
     var intervalId = setInterval(() => {
-      var timeLeft = endTime - Date.now();
-      var minutesLeft = Math.floor(timeLeft/60000 % 60);
-      var secondsLeft = Math.floor(timeLeft/1000 % 60);
-      if (secondsLeft < 10) {
-        secondsLeft = "0" + String(secondsLeft);
+      var states = {
+        minutes: this.state.minutes,
+        seconds: this.state.minutes,
       }
-      this.setState({
-        minutes: minutesLeft,
-        seconds: secondsLeft
-      });
+      currTimer === "Session" ? states.sessionCountdown = this.state.sessionCountdown - 1000 : states.breakCountdown = this.state.breakCountdown - 1000;
+      var timeLeft = endTime - Date.now();
+      states.minutes = Math.floor(timeLeft/60000 % 60);
+      states.seconds = Math.floor(timeLeft/1000 % 60);
+      if (states.seconds < 10) {
+        states.seconds = "0" + String(states.seconds);
+      }
+
+      this.setState({...states});
     }, 1000);
-    this.setState({intervalId: intervalId});
+    this.setState({
+      intervalId: intervalId,
+      currTimer: currTimer
+    });
   }
 
   pauseTimer() {
