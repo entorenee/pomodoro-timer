@@ -35,13 +35,11 @@ class Timer extends React.Component {
       }
       this.setState({...states});
     }
-    if (nextProps.isRunning === true) {
-      console.log("Session timer starting!");
+    if (this.props.isRunning === false && nextProps.isRunning === true) {
       this.countdownTimer(this.state.currTimer);
     }
-    if (nextProps.isRunning === false) {
+    if (this.props.isRunning === true && nextProps.isRunning === false) {
       this.pauseTimer();
-      console.log("Timer paused.");
     }
   }
 
