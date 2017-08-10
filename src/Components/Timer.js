@@ -81,7 +81,8 @@ class Timer extends React.Component {
 
     return (
       <div id="timer-countdown" onClick={() => this.props.toggleTimer()}>
-        {this.state.minutes} : {this.state.seconds}
+        <h2>{this.state.currTimer}</h2>
+        <span>{this.state.minutes} : {this.state.seconds}</span>
       </div>
     )
   }
