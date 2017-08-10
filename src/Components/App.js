@@ -10,7 +10,7 @@ class App extends React.Component {
     this.adjustTimers = this.adjustTimers.bind(this);
 
     this.state = {
-      sessionTime: 25,
+      sessionTime: 1,
       breakTime: 5,
       isRunning: false
     }
