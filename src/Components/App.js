@@ -8,6 +8,7 @@ class App extends React.Component {
   constructor() {
     super();
     this.adjustTimers = this.adjustTimers.bind(this);
+    this.toggleTimer = this.toggleTimer.bind(this);
 
     this.state = {
       sessionTime: 1,
@@ -27,6 +28,11 @@ class App extends React.Component {
     this.setState({...states});
   }
 
+  toggleTimer() {
+    var timerBool = !this.state.isRunning;
+    this.setState({isRunning: timerBool});
+  }
+
   render() {
     return (
       <div>
@@ -40,14 +46,11 @@ class App extends React.Component {
           sessionTime={this.state.sessionTime}
           breakTime={this.state.breakTime}
           isRunning={this.state.isRunning}
+          toggleTimer={this.toggleTimer}
         />
       </div>
     )
   }
 }
-
-// App.propTypes = {
-//
-// }
 
 export default App;

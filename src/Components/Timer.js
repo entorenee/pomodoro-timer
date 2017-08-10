@@ -82,7 +82,7 @@ class Timer extends React.Component {
   render() {
 
     return (
-      <div id="timer-countdown">
+      <div id="timer-countdown" onClick={() => this.props.toggleTimer()}>
         {this.state.minutes} : {this.state.seconds}
       </div>
     )
@@ -92,7 +92,8 @@ class Timer extends React.Component {
 Timer.propTypes = {
   sessionTime: PropTypes.number.isRequired,
   breakTime: PropTypes.number.isRequired,
-  isRunning: PropTypes.bool.isRequired
+  isRunning: PropTypes.bool.isRequired,
+  toggleTimer: PropTypes.func.isRequired
 }
 
 export default Timer;
