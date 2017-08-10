@@ -20,7 +20,7 @@ class Timer extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.props.sessionTime !== nextProps.sessionTime) {
-      var states = {sessionCountdown: nextProps.sessionTime * 60000}
+      let states = {sessionCountdown: nextProps.sessionTime * 60000}
       if (this.state.currTimer === "Session") {
         states.minutes = nextProps.sessionTime;
         states.seconds = "00";
@@ -28,7 +28,7 @@ class Timer extends React.Component {
       this.setState({...states});
     }
     if (this.props.breakTime !== nextProps.breakTime) {
-      var states = {breakCountdown: nextProps.breakTime * 60000}
+      let states = {breakCountdown: nextProps.breakTime * 60000}
       if (this.state.currTimer === "Break") {
         states.minutes = nextProps.breakTime;
         states.seconds = "00";
