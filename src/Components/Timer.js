@@ -20,18 +20,24 @@ class Timer extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.props.sessionTime !== nextProps.sessionTime) {
-      this.setState({sessionCountdown: nextProps.sessionTime * 60000});
+      var states = {sessionCountdown: nextProps.sessionTime * 60000}
+      if (this.state.currTimer === "Session") {
+        states.minutes = nextProps.sessionTime;
+        states.seconds = "00";
+      }
+      this.setState({...states});
     }
     if (this.props.breakTime !== nextProps.breakTime) {
-      this.setState({breakCountdown: nextProps.breakTime * 60000});
+      var states = {breakCountdown: nextProps.breakTime * 60000}
+      if (this.state.currTimer === "Break") {
+        states.minutes = nextProps.breakTime;
+        states.seconds = "00";
+      }
+      this.setState({...states});
     }
-    if (nextProps.isRunning === true && this.state.sessionCountdown > 0) { // Timer runs through session first
+    if (nextProps.isRunning === true) {
       console.log("Session timer starting!");
       this.countdownTimer(this.state.currTimer);
-    }
-    if (nextProps.isRunning === true && this.state.sessionCountdown === 0 && this.state.breakCountdown > 0) { // Run break timer if session timer is zero
-      console.log("Break timer starting!");
-      this.countdownTimer(this.state.breakCountdown);
     }
     if (nextProps.isRunning === false) {
       this.pauseTimer();
