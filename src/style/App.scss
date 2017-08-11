@@ -1,3 +1,14 @@
+@import "./vars.scss";
+
+body {
+  background-color: $baseColor;
+}
+
+#title {
+  text-align: center;
+  color: $mediumAccent;
+}
+
 #counter-control-wrapper {
   display: flex;
   justify-content: center;

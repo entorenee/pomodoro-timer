@@ -1,5 +1,12 @@
+@import "vars.scss";
+
 #sessionTime-timer-controls {
   margin-right: 100px;
+}
+
+.timer-control-name {
+  font-size: 20px;
+  color: $mediumAccent;
 }
 
 .controls {
@@ -10,6 +17,7 @@
 
 .timerTotal {
   font-size: 36px;
+  color: $mediumAccent;
 }
 
 .subtract-time, .add-time {
@@ -17,6 +25,7 @@
   width: 30px;
   height: 30px;
   font-size: 24px;
+  color: $darkAccent;
   display: flex;
   justify-content: center;
   align-items: center;

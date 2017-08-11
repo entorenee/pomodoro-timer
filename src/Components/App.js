@@ -1,5 +1,4 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
 import Counter from './Counter';
 import Timer from './Timer';
 import '../style/App.css';
@@ -36,8 +35,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        SessionTime is {this.state.sessionTime}
-        breakTime is {this.state.breakTime}
+        <h1 id="title">Pomodoro Timer</h1>
         <div id="counter-control-wrapper">
           <Counter name="sessionTime" adjustTimers={this.adjustTimers} timerTotal={this.state.sessionTime}/>
           <Counter name="breakTime" adjustTimers={this.adjustTimers} timerTotal={this.state.breakTime}/>

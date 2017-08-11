@@ -17,7 +17,7 @@ class Counter extends React.Component {
 
     return (
       <div id={this.props.name + "-timer-controls"} className="timer-controls">
-        <p>{timerName}</p>
+        <p className="timer-control-name">{timerName}</p>
         <div className="controls">
           <div className="subtract-time" onClick={() => this.props.adjustTimers(this.props.name, "-")}>-</div>
           <div className="timerTotal">{this.props.timerTotal}</div>

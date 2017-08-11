@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import '../style/Timer.css';
+import play from '../../src/img/play.png';
+import pause from '../../src/img/pause.png';
 
 class Timer extends React.Component {
   constructor(props) {
@@ -17,6 +19,7 @@ class Timer extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    var playBtn = document.getElementById('play-pause-btn');
     if (this.props.sessionTime !== nextProps.sessionTime) {
       let states = {sessionCountdown: nextProps.sessionTime * 60000}
       if (this.state.currTimer === "Session") {
@@ -35,9 +38,11 @@ class Timer extends React.Component {
     }
     if (this.props.isRunning === false && nextProps.isRunning === true) {
       this.countdownTimer(this.state.currTimer);
+      playBtn.src = pause;
     }
     if (this.props.isRunning === true && nextProps.isRunning === false) {
       this.pauseTimer();
+      playBtn.src = play;
     }
   }
 
@@ -90,6 +95,7 @@ class Timer extends React.Component {
       <div id="timer-countdown" onClick={() => this.props.toggleTimer()}>
         <h2>{this.state.currTimer}</h2>
         <span>{minutes} : {seconds}</span>
+        <img id="play-pause-btn" src={play} alt="Play pause button" />
       </div>
     )
   }
