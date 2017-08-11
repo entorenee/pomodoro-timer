@@ -13,8 +13,6 @@ class Timer extends React.Component {
       sessionCountdown: props.sessionTime * 60000,
       breakCountdown: props.breakTime * 60000,
       currTimer: "Session",
-      minutes: props.sessionTime,
-      seconds: "00"
     }
   }
 
@@ -44,30 +42,32 @@ class Timer extends React.Component {
   }
 
   componentDidUpdate() {
-    if (this.state.minutes === 0 && this.state.seconds === "00") {
+    if (this.state.sessionCountdown === 0) {
       this.pauseTimer(this.state.intervalId);
-      var newTimer = this.state.currTimer === "Session" ? "Break" : "Session";
-      this.setState({currTimer: newTimer});
-      this.countdownTimer(newTimer);
+      let states = {
+        currTimer: "Break",
+        breakCountdown: this.props.breakTime * 60000,
+        sessionCountdown: this.props.sessionTime * 60000,
+      }
+      this.setState({...states});
+      this.countdownTimer("Break");
+    }
+    if (this.state.breakCountdown === 0) {
+      this.pauseTimer(this.state.intervalId);
+      let states = {
+        currTimer: "Session",
+        breakCountdown: this.props.breakTime * 60000,
+        sessionCountdown: this.props.sessionTime * 60000,
+      }
+      this.setState({...states});
+      this.countdownTimer("Session");
     }
   }
 
   countdownTimer(timerName) {
-    var timerValue = timerName === "Session" ? this.state.sessionCountdown : this.state.breakCountdown;
-    var endTime = Date.now() + timerValue;
     var intervalId = setInterval(() => {
-      var states = {
-        minutes: this.state.minutes,
-        seconds: this.state.minutes,
-      }
+      var states = {};
       timerName === "Session" ? states.sessionCountdown = this.state.sessionCountdown - 1000 : states.breakCountdown = this.state.breakCountdown - 1000;
-      var timeLeft = endTime - Date.now();
-      states.minutes = Math.floor(timeLeft/60000 % 60);
-      states.seconds = Math.floor(timeLeft/1000 % 60);
-      if (states.seconds < 10) {
-        states.seconds = "0" + String(states.seconds);
-      }
-
       this.setState({...states});
     }, 1000);
     this.setState({intervalId: intervalId});
@@ -78,11 +78,18 @@ class Timer extends React.Component {
   }
 
   render() {
-
+    var minutes,
+    seconds;
+    var countdown = this.state.currTimer === "Session" ? this.state.sessionCountdown : this.state.breakCountdown;
+    minutes = Math.floor(countdown/60000 % 60);
+    seconds = Math.floor(countdown/1000 % 60);
+    if (seconds < 10) {
+      seconds = "0" + String(seconds);
+    }
     return (
       <div id="timer-countdown" onClick={() => this.props.toggleTimer()}>
         <h2>{this.state.currTimer}</h2>
-        <span>{this.state.minutes} : {this.state.seconds}</span>
+        <span>{minutes} : {seconds}</span>
       </div>
     )
   }
