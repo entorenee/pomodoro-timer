@@ -22,7 +22,7 @@ class App extends React.Component {
     if (this.state.isRunning === false && timeDirection === "+") {
       states[timer] += 1;
     }
-    if (this.state.isRunning === false && timeDirection === "-") {
+    if (this.state.isRunning === false && timeDirection === "-" && states[timer] > 1) {
       states[timer] -= 1;
     }
     this.setState({...states});
