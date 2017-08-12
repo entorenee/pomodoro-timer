@@ -11,7 +11,7 @@ class App extends React.Component {
     this.toggleTimer = this.toggleTimer.bind(this);
 
     this.state = {
-      sessionTime: 1,
+      sessionTime: 25,
       breakTime: 5,
       isRunning: false
     }
