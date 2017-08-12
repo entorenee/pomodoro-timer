@@ -3,6 +3,7 @@
 #timer-countdown {
   background: $lightAccent;
   background: linear-gradient(to bottom right, $mediumAccent, $darkAccent);
+  font-family: $roboto;
   color: $baseColor;
   width: 250px;
   height: 250px;
@@ -14,6 +15,14 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
+
+  h2 {
+    font-size: 28px;
+  }
+
+  span {
+    font-size: 22px;
+  }
 }
 
 #play-pause-btn {
