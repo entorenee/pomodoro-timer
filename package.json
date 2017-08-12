@@ -2,7 +2,9 @@
   "name": "pomodoro-timer",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://dslemay.com/projects/pomodoro-timer/",
   "dependencies": {
+    "gulp": "^3.9.1",
     "node-sass-chokidar": "0.0.3",
     "npm-run-all": "^4.0.2",
     "react": "^15.6.1",
