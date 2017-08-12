@@ -9,7 +9,6 @@ class Timer extends React.Component {
     super(props);
     this.countdownTimer = this.countdownTimer.bind(this);
     this.pauseTimer = this.pauseTimer.bind(this);
-
     this.state = {
       // countdown timers are stored in state in ms as they are directly manipulated by the timer method.
       sessionCountdown: props.sessionTime * 60000,
@@ -49,6 +48,7 @@ class Timer extends React.Component {
   componentDidUpdate() {
     if (this.state.sessionCountdown === 0) {
       this.pauseTimer(this.state.intervalId);
+      this.props.sound.play();
       let states = {
         currTimer: "Break",
         breakCountdown: this.props.breakTime * 60000,
@@ -59,6 +59,7 @@ class Timer extends React.Component {
     }
     if (this.state.breakCountdown === 0) {
       this.pauseTimer(this.state.intervalId);
+      this.props.sound.play();
       let states = {
         currTimer: "Session",
         breakCountdown: this.props.breakTime * 60000,
