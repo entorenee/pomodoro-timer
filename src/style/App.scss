@@ -9,9 +9,14 @@ body {
   font-size: 40px;
   color: $mediumAccent;
   font-family: $lato;
+  margin-bottom: 0px;
 }
 
 #counter-control-wrapper {
   display: flex;
   justify-content: center;
+
+  @media screen and (max-width: $screenBreak) {
+    justify-content: space-around;
+  }
 }
