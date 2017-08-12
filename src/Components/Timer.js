@@ -91,6 +91,8 @@ class Timer extends React.Component {
     if (seconds < 10) {
       seconds = "0" + String(seconds);
     }
+    var title = `Pomodoro ${this.state.currTimer} ${minutes}:${seconds}`;
+    document.title = title;
     return (
       <div id="timer-countdown" onClick={() => this.props.toggleTimer()}>
         <h2>{this.state.currTimer}</h2>
