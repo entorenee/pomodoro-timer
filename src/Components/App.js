@@ -2,7 +2,7 @@ import React from 'react';
 import Counter from './Counter';
 import Timer from './Timer';
 import '../style/App.css';
-import bell from '../../src/bell.mp3';
+import bell from '../bell.mp3';
 
 class App extends React.Component {
   constructor() {
@@ -35,7 +35,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="app-container">
         <h1 id="title">Pomodoro Timer</h1>
         <div id="counter-control-wrapper">
           <Counter
