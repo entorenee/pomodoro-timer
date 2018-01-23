@@ -1,4 +1,4 @@
-@import "vars.scss";
+@import 'vars.scss';
 
 #sessionTime-timer-controls {
   margin-right: 100px;
@@ -30,11 +30,13 @@
   font-family: $roboto;
 }
 
-.subtract-time, .add-time {
+.adjust-time {
   cursor: pointer;
   width: 30px;
   height: 30px;
   font-size: 24px;
+  background-color: $baseColor;
+  border: 0;
   color: $darkAccent;
   display: flex;
   justify-content: center;

@@ -1,8 +1,9 @@
-@import "vars.scss";
+@import 'vars.scss';
 
-#timer-countdown {
+.timer-countdown {
   background: $lightAccent;
   background: linear-gradient(to bottom right, $mediumAccent, $darkAccent);
+  border: 0;
   font-family: $roboto;
   color: $baseColor;
   width: 250px;
@@ -26,6 +27,6 @@
   }
 }
 
-#play-pause-btn {
+.play-pause-btn {
   margin-top: 25px;
 }
