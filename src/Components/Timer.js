@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import '../style/Timer.css';
 import play from '../img/play.png';
 import pause from '../img/pause.png';
 
-class Timer extends React.Component {
+class Timer extends Component {
   constructor(props) {
     super(props);
     this.countdownTimer = this.countdownTimer.bind(this);
