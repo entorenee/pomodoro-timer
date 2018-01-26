@@ -11,29 +11,24 @@ class Counter extends Component {
   }
 
   render() {
+    const { name, adjustTimers, timerTotal } = this.props;
     let timerName;
-    if (this.props.name === 'sessionTime') {
+    if (name === 'sessionTime') {
       timerName = 'Session Length';
     }
-    if (this.props.name === 'breakTime') {
+    if (name === 'breakTime') {
       timerName = 'Break Length';
     }
 
     return (
-      <div id={`${this.props.name}-timer-controls`} className="timer-controls">
+      <div id={`${name}-timer-controls`} className="timer-controls">
         <p className="timer-control-name">{timerName}</p>
         <div className="controls">
-          <button
-            className="adjust-time"
-            onClick={() => this.props.adjustTimers(this.props.name, '-')}
-          >
+          <button className="adjust-time" onClick={() => adjustTimers(name, '-')}>
             -
           </button>
-          <div className="timerTotal">{this.props.timerTotal}</div>
-          <button
-            className="adjust-time"
-            onClick={() => this.props.adjustTimers(this.props.name, '+')}
-          >
+          <div className="timerTotal">{timerTotal}</div>
+          <button className="adjust-time" onClick={() => adjustTimers(name, '+')}>
             +
           </button>
         </div>
