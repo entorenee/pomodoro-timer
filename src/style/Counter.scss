@@ -3,7 +3,7 @@
 #sessionTime-timer-controls {
   margin-right: 100px;
 
-  @media screen and (max-width: $screenBreak) {
+  @media screen and (max-width: 425px) {
     margin-right: 30px;
   }
 }
