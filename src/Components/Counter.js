@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { keyboardHandler } from '../helpers';
 import '../style/Counter.css';
 
 class Counter extends Component {
@@ -24,13 +25,29 @@ class Counter extends Component {
       <div id={`${name}-timer-controls`} className="timer-controls">
         <p className="timer-control-name">{timerName}</p>
         <div className="controls">
-          <button className="adjust-time" onClick={() => adjustTimers(name, '-')}>
+          <div
+            className="adjust-time"
+            onClick={() => adjustTimers(name, '-')}
+            onKeyPress={e => {
+              if (keyboardHandler(e)) adjustTimers(name, '-');
+            }}
+            role="button"
+            tabIndex={0}
+          >
             -
-          </button>
+          </div>
           <div className="timerTotal">{timerTotal}</div>
-          <button className="adjust-time" onClick={() => adjustTimers(name, '+')}>
+          <div
+            className="adjust-time"
+            onClick={() => adjustTimers(name, '+')}
+            onKeyPress={e => {
+              if (keyboardHandler(e)) adjustTimers(name, '+');
+            }}
+            role="button"
+            tabIndex={0}
+          >
             +
-          </button>
+          </div>
         </div>
       </div>
     );
