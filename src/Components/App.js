@@ -35,7 +35,7 @@ class App extends Component {
 
   render() {
     return (
-      <div className="app-container">
+      <div className="pomodoro-app">
         <h1 id="title">Pomodoro Timer</h1>
         <div id="counter-control-wrapper">
           <Counter
