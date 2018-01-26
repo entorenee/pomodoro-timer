@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { keyboardHandler } from '../helpers';
 import '../style/Timer.css';
 import play from '../img/play.png';
 import pause from '../img/pause.png';
@@ -91,6 +92,7 @@ class Timer extends Component {
 
   render() {
     const { currTimer, sessionCountdown, breakCountdown } = this.state;
+    const { toggleTimer } = this.props;
     let seconds;
     const countdown = currTimer === 'Session' ? sessionCountdown : breakCountdown;
     const minutes = Math.floor((countdown / 60000) % 60);
@@ -101,7 +103,15 @@ class Timer extends Component {
     const title = `${minutes}:${seconds} Pomodoro ${currTimer}`;
     document.title = title;
     return (
-      <button className="timer-countdown" onClick={() => this.props.toggleTimer()}>
+      <div
+        className="timer-countdown"
+        onClick={() => toggleTimer()}
+        onKeyPress={e => {
+          if (keyboardHandler(e)) toggleTimer();
+        }}
+        role="button"
+        tabIndex={0}
+      >
         <h2>{currTimer}</h2>
         <span>
           {minutes} : {seconds}
@@ -114,7 +124,7 @@ class Timer extends Component {
             this.playBtn = input;
           }}
         />
-      </button>
+      </div>
     );
   }
 }
