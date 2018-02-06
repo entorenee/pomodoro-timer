@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Counter from './Counter';
 import Timer from './Timer';
 import '../style/App.css';
-import bell from '../bell.mp3';
 
 class App extends Component {
   constructor() {
@@ -54,7 +53,6 @@ class App extends Component {
           breakTime={this.state.breakTime}
           isRunning={this.state.isRunning}
           toggleTimer={this.toggleTimer}
-          sound={new Audio(bell)}
         />
       </div>
     );
