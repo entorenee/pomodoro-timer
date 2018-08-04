@@ -26,52 +26,58 @@ class Timer extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.sessionTime !== nextProps.sessionTime) {
+    const { breakTime, isRunning, sessionTime } = this.props;
+    const { currTimer } = this.state;
+
+    if (sessionTime !== nextProps.sessionTime) {
       const states = { sessionCountdown: nextProps.sessionTime * 60000 };
-      if (this.state.currTimer === 'Session') {
+      if (currTimer === 'Session') {
         states.minutes = nextProps.sessionTime;
         states.seconds = '00';
       }
       this.setState({ ...states });
     }
-    if (this.props.breakTime !== nextProps.breakTime) {
+    if (breakTime !== nextProps.breakTime) {
       const states = { breakCountdown: nextProps.breakTime * 60000 };
-      if (this.state.currTimer === 'Break') {
+      if (currTimer === 'Break') {
         states.minutes = nextProps.breakTime;
         states.seconds = '00';
       }
       this.setState({ ...states });
     }
-    if (this.props.isRunning === false && nextProps.isRunning === true) {
-      this.countdownTimer(this.state.currTimer);
+    if (isRunning === false && nextProps.isRunning === true) {
+      this.countdownTimer(currTimer);
       this.playBtn.src = pause;
     }
-    if (this.props.isRunning === true && nextProps.isRunning === false) {
+    if (isRunning === true && nextProps.isRunning === false) {
       this.pauseTimer();
       this.playBtn.src = play;
     }
   }
 
   componentDidUpdate() {
-    if (this.state.sessionCountdown === 0) {
-      this.pauseTimer(this.state.intervalId);
+    const { breakCountdown, intervalId, sessionCountdown } = this.state;
+    const { breakTime, sessionTime } = this.props;
+
+    if (sessionCountdown === 0) {
+      this.pauseTimer(intervalId);
       this.bell.play();
       const states = {
         currTimer: 'Break',
-        breakCountdown: this.props.breakTime * 60000,
-        sessionCountdown: this.props.sessionTime * 60000
+        breakCountdown: breakTime * 60000,
+        sessionCountdown: sessionTime * 60000
       };
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({ ...states });
       this.countdownTimer('Break');
     }
-    if (this.state.breakCountdown === 0) {
-      this.pauseTimer(this.state.intervalId);
+    if (breakCountdown === 0) {
+      this.pauseTimer(intervalId);
       this.bell.play();
       const states = {
         currTimer: 'Session',
-        breakCountdown: this.props.breakTime * 60000,
-        sessionCountdown: this.props.sessionTime * 60000
+        breakCountdown: breakTime * 60000,
+        sessionCountdown: sessionTime * 60000
       };
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({ ...states });
@@ -80,12 +86,14 @@ class Timer extends Component {
   }
 
   countdownTimer(timerName) {
+    const { breakCountdown, sessionCountdown } = this.state;
+
     const intervalId = setInterval(() => {
       const states = {};
       if (timerName === 'Session') {
-        states.sessionCountdown = this.state.sessionCountdown - 1000;
+        states.sessionCountdown = sessionCountdown - 1000;
       } else {
-        states.breakCountdown = this.state.breakCountdown - 1000;
+        states.breakCountdown = breakCountdown - 1000;
       }
       this.setState({ ...states });
     }, 1000);
@@ -93,7 +101,9 @@ class Timer extends Component {
   }
 
   pauseTimer() {
-    clearInterval(this.state.intervalId);
+    const { intervalId } = this.state;
+
+    clearInterval(intervalId);
   }
 
   render() {

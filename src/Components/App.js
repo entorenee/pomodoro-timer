@@ -18,22 +18,24 @@ class App extends Component {
   }
 
   adjustTimers(timer, timeDirection) {
+    const { isRunning } = this.state;
     const states = { ...this.state };
-    if (this.state.isRunning === false && timeDirection === '+') {
+    if (isRunning === false && timeDirection === '+') {
       states[timer] += 1;
     }
-    if (this.state.isRunning === false && timeDirection === '-' && states[timer] > 1) {
+    if (isRunning === false && timeDirection === '-' && states[timer] > 1) {
       states[timer] -= 1;
     }
     this.setState({ ...states });
   }
 
   toggleTimer() {
-    const timerBool = !this.state.isRunning;
-    this.setState({ isRunning: timerBool });
+    this.setState(state => ({ isRunning: !state.isRunning }));
   }
 
   render() {
+    const { breakTime, isRunning, sessionTime } = this.state;
+
     return (
       <div className="pomodoro-app">
         <Helmet>
@@ -44,21 +46,13 @@ class App extends Component {
         </Helmet>
         <h1 id="title">Pomodoro Timer</h1>
         <div id="counter-control-wrapper">
-          <Counter
-            name="sessionTime"
-            adjustTimers={this.adjustTimers}
-            timerTotal={this.state.sessionTime}
-          />
-          <Counter
-            name="breakTime"
-            adjustTimers={this.adjustTimers}
-            timerTotal={this.state.breakTime}
-          />
+          <Counter name="sessionTime" adjustTimers={this.adjustTimers} timerTotal={sessionTime} />
+          <Counter name="breakTime" adjustTimers={this.adjustTimers} timerTotal={breakTime} />
         </div>
         <Timer
-          sessionTime={this.state.sessionTime}
-          breakTime={this.state.breakTime}
-          isRunning={this.state.isRunning}
+          sessionTime={sessionTime}
+          breakTime={breakTime}
+          isRunning={isRunning}
           toggleTimer={this.toggleTimer}
         />
       </div>
