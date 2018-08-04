@@ -17,7 +17,7 @@ class Timer extends Component {
       manipulated by the timer method. */
       sessionCountdown: props.sessionTime * 60000,
       breakCountdown: props.breakTime * 60000,
-      currTimer: 'Session'
+      currTimer: 'Session',
     };
   }
 
@@ -30,72 +30,35 @@ class Timer extends Component {
     const { currTimer } = this.state;
 
     if (sessionTime !== nextProps.sessionTime) {
-      const states = { sessionCountdown: nextProps.sessionTime * 60000 };
-      if (currTimer === 'Session') {
-        states.minutes = nextProps.sessionTime;
-        states.seconds = '00';
-      }
-      this.setState({ ...states });
+      this.setState({ sessionCountdown: nextProps.sessionTime * 60000 });
     }
     if (breakTime !== nextProps.breakTime) {
-      const states = { breakCountdown: nextProps.breakTime * 60000 };
-      if (currTimer === 'Break') {
-        states.minutes = nextProps.breakTime;
-        states.seconds = '00';
-      }
-      this.setState({ ...states });
+      this.setState({ breakCountdown: nextProps.breakTime * 60000 });
     }
     if (isRunning === false && nextProps.isRunning === true) {
       this.countdownTimer(currTimer);
-      this.playBtn.src = pause;
     }
     if (isRunning === true && nextProps.isRunning === false) {
       this.pauseTimer();
-      this.playBtn.src = play;
     }
   }
 
   componentDidUpdate() {
-    const { breakCountdown, intervalId, sessionCountdown } = this.state;
-    const { breakTime, sessionTime } = this.props;
+    const { breakCountdown, sessionCountdown } = this.state;
 
-    if (sessionCountdown === 0) {
-      this.pauseTimer(intervalId);
-      this.bell.play();
-      const states = {
-        currTimer: 'Break',
-        breakCountdown: breakTime * 60000,
-        sessionCountdown: sessionTime * 60000
-      };
-      // eslint-disable-next-line react/no-did-update-set-state
-      this.setState({ ...states });
-      this.countdownTimer('Break');
-    }
-    if (breakCountdown === 0) {
-      this.pauseTimer(intervalId);
-      this.bell.play();
-      const states = {
-        currTimer: 'Session',
-        breakCountdown: breakTime * 60000,
-        sessionCountdown: sessionTime * 60000
-      };
-      // eslint-disable-next-line react/no-did-update-set-state
-      this.setState({ ...states });
-      this.countdownTimer('Session');
+    if (sessionCountdown === 0 || breakCountdown === 0) {
+      console.log('Switch');
+      this.switchTimer();
     }
   }
 
   countdownTimer(timerName) {
-    const { breakCountdown, sessionCountdown } = this.state;
+    const stateManaged = timerName === 'Session' ? 'sessionCountdown' : 'breakCountdown';
 
     const intervalId = setInterval(() => {
-      const states = {};
-      if (timerName === 'Session') {
-        states.sessionCountdown = sessionCountdown - 1000;
-      } else {
-        states.breakCountdown = breakCountdown - 1000;
-      }
-      this.setState({ ...states });
+      this.setState(state => ({
+        [stateManaged]: state[stateManaged] - 1000,
+      }));
     }, 1000);
     this.setState({ intervalId });
   }
@@ -106,9 +69,23 @@ class Timer extends Component {
     clearInterval(intervalId);
   }
 
+  switchTimer() {
+    const { currTimer, intervalId } = this.state;
+    const newTimer = currTimer === 'Session' ? 'Break' : 'Session';
+
+    this.pauseTimer(intervalId);
+    this.bell.play();
+    this.setState((state, props) => ({
+      currTimer: newTimer,
+      breakCountdown: props.breakTime * 60000,
+      sessionCountdown: props.sessionTime * 60000,
+    }));
+    this.countdownTimer(newTimer);
+  }
+
   render() {
     const { currTimer, sessionCountdown, breakCountdown } = this.state;
-    const { toggleTimer } = this.props;
+    const { isRunning, toggleTimer } = this.props;
     let seconds;
     const countdown = currTimer === 'Session' ? sessionCountdown : breakCountdown;
     const minutes = Math.floor((countdown / 60000) % 60);
@@ -134,7 +111,7 @@ class Timer extends Component {
         </span>
         <img
           className="play-pause-btn"
-          src={play}
+          src={isRunning ? pause : play}
           alt="Play pause button"
           ref={input => {
             this.playBtn = input;
@@ -149,7 +126,7 @@ Timer.propTypes = {
   sessionTime: PropTypes.number.isRequired,
   breakTime: PropTypes.number.isRequired,
   isRunning: PropTypes.bool.isRequired,
-  toggleTimer: PropTypes.func.isRequired
+  toggleTimer: PropTypes.func.isRequired,
 };
 
 export default Timer;
