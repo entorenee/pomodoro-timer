@@ -1,4 +1,5 @@
 module.exports = {
+  parser: 'babel-eslint',
   env: {
     browser: true,
     es6: true,
@@ -29,7 +30,8 @@ module.exports = {
       'error',
       {
         singleQuote: true,
-        printWidth: 100
+        printWidth: 100,
+        trailingComma: 'all',
       }
     ]
   }
