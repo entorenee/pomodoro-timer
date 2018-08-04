@@ -13,20 +13,22 @@ class App extends Component {
     this.state = {
       sessionTime: 25,
       breakTime: 5,
-      isRunning: false
+      isRunning: false,
     };
   }
 
   adjustTimers(timer, timeDirection) {
-    const { isRunning } = this.state;
-    const states = { ...this.state };
-    if (isRunning === false && timeDirection === '+') {
-      states[timer] += 1;
-    }
-    if (isRunning === false && timeDirection === '-' && states[timer] > 1) {
-      states[timer] -= 1;
-    }
-    this.setState({ ...states });
+    this.setState(state => {
+      const { isRunning } = state;
+      if (isRunning === false && timeDirection === '+') {
+        return { [timer]: state[timer] + 1 };
+      }
+
+      if (isRunning === false && timeDirection === '-' && state[timer] > 1) {
+        return { [timer]: state[timer] - 1 };
+      }
+      return {};
+    });
   }
 
   toggleTimer() {
